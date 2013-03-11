@@ -8,7 +8,8 @@ To use this project follow these steps:
 #. Get the Code
 #. Create your working environment
 #. Install dependencies
-#. Set up project environment variables‎
+#. Set up project environment variables
+#. Run PHX
 
 
 Set up github
@@ -126,3 +127,11 @@ Examples
 - Windows system (vista and above with built-in PowerShell)::
 
 	[Environment]::SetEnvironmentVariable("PHX_SECRET_KEY", "MINHEMLIGANYCKEL", "User")
+
+Run PHX
+=======
+
+- Run this command in project root::
+    
+    	$ python phx/manage.py runserver 0:8000 --settings=phx.settings.local
+
