@@ -62,7 +62,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': get_env_setting('PHX_DB_NAME'),
         'USER': get_env_setting('PHX_DB_USER'),
-        'PASSWORD': get_env_setting('PHX_DB_PASSWORD', ''),
+        'PASSWORD': get_env_setting('PHX_DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -205,7 +205,6 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'core',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
