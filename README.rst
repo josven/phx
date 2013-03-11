@@ -2,8 +2,6 @@
 PHX Django project
 ==================
 
-To use this project follow these steps:
-
 #. About the project
 #. Status of the PHX Django project
 #. Install project
@@ -14,7 +12,7 @@ To use this project follow these steps:
 About the project
 =================
 
-This is the django project for the Swedish internet community ``PHX``
+This is the django project for the Swedish internet community **PHX**
 Our home on the internets is http://phx.se
 
 This project is a refactored version of https://github.com/josven/phoenix
@@ -30,14 +28,14 @@ This project is not even close to production state...
 Install project
 ===============
 
-    - To install the project follow the instuctions_
+To install the project follow the instructions_
 
-.. _instuctions: https://github.com/josven/phx/blob/master/docs/install.txt
+.. _instructions: https://github.com/josven/phx/blob/master/docs/install.rst
 
 Acknowledgements
 ================
 
-    - All of the contributors_ to this project.
+All of the contributors_ to this project.
 
 .. _contributors: https://github.com/josven/phx/blob/master/CONTRIBUTORS.txt
 
@@ -45,6 +43,6 @@ Acknowledgements
 License
 =======
 
-    - Official lincense of the project.
+Official lincense_ of the project.
 
-.. _contributors: https://github.com/josven/phx/blob/master/LICENSE.txt
+.. _lincense: https://github.com/josven/phx/blob/master/LICENSE.txt
