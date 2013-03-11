@@ -78,7 +78,7 @@ virtualenvwrapper):
     import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)
 
 
-Installation of Dependencies
+Installation of dependencies
 =============================
 
 Depending on where you are installing dependencies:
@@ -106,10 +106,10 @@ You have to set some of the settings in you system environment variables‎.
 
 These are the environment variables‎ you need to set.
 
-	``PHX_SECRET_KEY`` (Set this to a any random string)
-	``PHX_DB_NAME``
-	``PHX_DB_USER``
-	``PHX_DB_PASSWORD``
+* **PHX_SECRET_KEY** (Set this to a any random string)
+* **PHX_DB_NAME**
+* **PHX_DB_USER**
+* **PHX_DB_PASSWORD**
 
 Examples
 --------
@@ -121,7 +121,7 @@ Examples
 - Windows systems (versions below vista)::
 
 	> Windows key > Run > cmd.exe
-	> setx PHX_SECRET_KEY MINHEMLIGANYCKEL
+	$ setx PHX_SECRET_KEY MINHEMLIGANYCKEL
 
 - Windows system (vista and above with built-in PowerShell)::
 
