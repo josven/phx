@@ -1,0 +1,19 @@
+{% extends "registration_base.html" %}
+{% load bootstrap_tags %}
+
+{% block top_navigation %}
+    <li><a href="{% url 'login_view' %}">Logga in</a></li>
+    <li class="active"><a href="#">Registrera</a></li>
+    <li><a href="{% url 'about_view' %}">Om oss</a></li>
+{% endblock top_navigation %}
+
+{% block content %}
+<form class="form-vertical" action="" method="POST">
+    <legend>Registrera användare</legend>
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Skapa</button>
+    </div>
+</form>
+{% endblock content %}
