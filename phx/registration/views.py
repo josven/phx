@@ -8,6 +8,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.views.generic import FormView
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
+from django.shortcuts import redirect
 
 from braces.views import SetHeadlineMixin
 
@@ -20,6 +21,12 @@ class LoginView(SetHeadlineMixin, FormView):
     template_name = 'login.html'
     form_class = AuthenticationForm
     success_url = reverse_lazy('start')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect('start')
+        return super(LoginView, self).dispatch(
+            request, *args, **kwargs)
 
     def form_valid(self, form):
         user = form.get_user()
