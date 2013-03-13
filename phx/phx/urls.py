@@ -1,20 +1,36 @@
-from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
+from django.conf.urls import patterns
+from django.conf.urls import include
+from django.conf.urls import url
+from django.conf import settings
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
-
-    # Examples:
-    # url(r'^$', 'phx.views.home', name='home'),
-    # url(r'^phx/', include('phx.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
+urlpatterns = patterns(
+    '',
     url(r'^admin/', include(admin.site.urls)),
+    (r'^', include('registration.urls')),
+    #(r'^', include('frontpage.urls')),
+    #(r'^', include('core.urls')),
+    #(r'^', include('settings.urls')),
+    #(r'^', include('guestbook.urls')),
+    #(r'^forum/', include('forum.urls')),
+    #(r'^user/', include('profiles.urls')),
+    #(r'^chat/', include('chat.urls')),
+    #(r'^notifications/', include('notifications.urls')),
+    #(r'^', include('articles.urls')),
+    #(r'^accounts/', include('accounts.urls')),
+
 )
+
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += patterns(
+        '',
+        url(
+            regex=r'^(?P<path>.*)$',
+            view='django.views.static.serve',
+            kwargs={'document_root': settings.MEDIA_ROOT}
+        )
+    )

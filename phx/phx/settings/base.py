@@ -189,22 +189,38 @@ DJANGO_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Useful template tags:
-    # 'django.contrib.humanize',
-
-    # Admin panel and documentation:
+    'django.contrib.humanize',
     'django.contrib.admin',
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
+    'django.contrib.markup',
 )
 
 THIRD_PARTY_APPS = (
-    # Database migration helpers:
+    'taggit',
     'south',
+    'mptt',
+    'sorl.thumbnail',
+    'oembed',
+    'reversion',
+    'pagination',
+    'debug_toolbar',
+    'compressor',
+    'django_forms_bootstrap',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'core',
+    'accounts',
+    'articles',
+    'chat',
+    'forum',
+    'frontpage',
+    'guestbook',
+    'notifications',
+    'profiles',
+    'registration',
+    'settings',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
