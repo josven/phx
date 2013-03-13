@@ -26,4 +26,3 @@ python-dateutil==1.5
 python-memcached==1.48
 sorl-thumbnail==11.12
 wsgiref==0.1.2
-South==0.7.6
