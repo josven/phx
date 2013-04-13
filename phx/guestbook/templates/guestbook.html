@@ -1,0 +1,40 @@
+{% extends "profile.html" %}
+
+{% load markup %}
+{% load humanize %}
+{% load thumbnail %}
+{% load entry_tags %}
+{% load filters %}
+
+{% block content %}
+
+
+<div class="ui-widget">
+    <h2 class="ui-widget-header ui-helper-reset">{{ page_title }}</h2>
+</div>
+
+<div id="guestbook-form-wrapper"  class="ui-widget ui-widget-content ui-helper-clearfix form-wrapper {% if request.user == user %}ui-helper-hidden{% endif %}">
+    <form   id="guestbook-form-post" 
+            class="form-add-entry {% if request.user == profile.user %}ui-helper-hidden{% endif %}" 
+            method="POST" 
+            action="">
+
+        {% csrf_token %}
+        <ul>
+            {{ form.as_ul }}
+            <li class="buttonpanel">
+                <div class="buttonset">
+                    <input type="submit" value="Skicka">
+                    <input type="button" data-preview="text" value="Förhandsgranska" />
+                    <input type="button" data-field="text" data-maximize="true" data-form="guestbook-form-post" value="Storskärm" />
+                </div>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<ul id="guestbook-entries" class="flat-list">   
+    {% include "_guestbook_comments.html" %}
+</ul>
+
+{% endblock content %}

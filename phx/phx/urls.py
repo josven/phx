@@ -11,15 +11,15 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     (r'^', include('registration.urls')),
-    #(r'^', include('frontpage.urls')),
+    (r'^', include('frontpage.urls')),
+    (r'^', include('profiles.urls')),
     #(r'^', include('core.urls')),
     #(r'^', include('settings.urls')),
     #(r'^', include('guestbook.urls')),
     #(r'^forum/', include('forum.urls')),
-    #(r'^user/', include('profiles.urls')),
     #(r'^chat/', include('chat.urls')),
     #(r'^notifications/', include('notifications.urls')),
-    #(r'^', include('articles.urls')),
+    (r'^', include('articles.urls')),
     #(r'^accounts/', include('accounts.urls')),
 
 )

@@ -1,0 +1,15 @@
+.ui-widget-header.header .button-wrapper {
+	font-size: 60%;
+	float: right;
+}
+
+#profile-description {
+    padding: 1em;
+}
+
+#profile-description #id_description {
+    border:none;
+    width:100%;
+    margin:0;
+    padding:0;
+}

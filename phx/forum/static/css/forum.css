@@ -1,0 +1,59 @@
+/* jquery-ui tabs */
+.ui-tabs { padding:0;}
+.ui-tabs .ui-tabs-panel { padding:0;}
+
+/* Create thread */
+#categories { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#categories .ui-selectee { cursor:pointer; padding: .2em 0.4em; height: 18px; }
+
+
+/* List threads, data tables styles */
+div.dataTables_length {
+	float: left;
+}
+
+div.dataTables_filter {
+	float: right;
+}
+
+div.dataTables_info {
+	float: left;
+}
+
+div.dataTables_paginate {
+	float: right;
+}
+
+div.dataTables_length,
+div.dataTables_filter,
+div.dataTables_paginate,
+div.dataTables_info {
+	padding: 6px;
+}
+
+
+table.tread_table a {
+    font-weight:bold;
+    text-decoration:none;
+}
+
+table.tread_table {
+	clear: both;
+    width: 100%;
+}
+
+table.tread_table td,
+table.tread_table th {
+	padding: 5px;
+}
+
+div.dataTables_wrapper:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+html[xmlns] .dataTables_wrapper { display: block; }
+* html .dataTables_wrapper { height: 1%; }

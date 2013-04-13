@@ -1,0 +1,276 @@
+{% extends "base_sidebar.html" %}
+{% load filters %}
+{% load markup %}
+{% load core_tags %}
+{% load core_filters %}
+{% load thumbnail %}
+
+{% block sidebar_content %}
+<div class="accordion" id="side-menu">
+  {% block categories %}
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#side-menu" href="#categories">
+        Kategorier
+      </a>
+    </div>
+    <div id="categories" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <ul class="nav nav-list">
+          {% if active_tags %}
+          <li class="nav-header">Aktiva</li>
+          {% for category in active_tags %}
+          <li class="active">
+            <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% endfor %}
+          {% endif %}
+
+          <li class="nav-header">Huvudkategorier</li>
+          {% for category in main_categories %}
+          {% if category.name in request.GET.tags %}
+          <li class="active">
+            <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ request.path }}?{% format_get_params request.GET add_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          
+          <li class="nav-header"><i class="icon-eye-open"></i> Bevakade</li>
+          {% for category in user_categories %}
+          {% if category.name in request.GET.tags %}
+          <li class="active">
+            <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ request.path }}?{% format_get_params request.GET add_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+
+          <li class="nav-header">Top 5 använda</li>
+          {% for category in top_used_categories %}
+          {% if category.name in request.GET.tags %}
+          <li class="active">
+            <a data-toggle="tooltip" title="{{ category.articles_count }} användningar"  href="{{ request.path }}?{% format_get_params request.GET remove_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% else %}
+          <li>
+            <a data-toggle="tooltip" title="{{ category.articles_count }} användningar"href="{{ request.path }}?{% format_get_params request.GET add_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+
+          <li class="nav-header">Top 5 bevakade</li>
+          {% for category in top_subscribed_categories %}
+          {% if category.name in request.GET.tags %}
+          <li class="active">
+            <a data-toggle="tooltip" title="{{ category.subscriptions_count }} bevakningar"  href="{{ request.path }}?{% format_get_params request.GET remove_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% else %}
+          <li>
+            <a data-toggle="tooltip" title="{{ category.subscriptions_count }} bevakningar" href="{{ request.path }}?{% format_get_params request.GET add_tag=category.name %}">{{ category.name|lower }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endblock categories %}
+</div>
+{% endblock sidebar_content %}
+
+{% block content %}
+{% block filters %}
+<form method="GET" action="" class="form-search">
+
+  <div class="btn-group" data-toggle="buttons-radio">
+    <a href="{{ request.path }}?{% format_get_params request.GET display='full_stories' %}" type="button" class="btn {% if 'full_stories' in request.GET.display %}active{% endif %}">
+      <i class="icon-align-justify"></i> 
+    </a>
+    <a href="{{ request.path }}" type="button" class="btn {% if not 'full_stories' in request.GET.display %}active{% endif %}">
+      <i class="icon-list"></i> 
+    </a>
+  </div>
+
+  <div class="btn-group" data-toggle="buttons-radio">
+    <a href="{{ request.path }}?{% format_get_params request.GET order='ascending' %}" type="button" class="btn {% if 'ascending' in request.GET.order %}active{% endif %}">
+      <i class="icon-arrow-up"></i> 
+    </a>
+    <a href="{{ request.path }}?{% format_get_params request.GET order='descending' %}" type="button" class="btn {% if not 'ascending' in request.GET.order %}active{% endif %}">
+      <i class="icon-arrow-down"></i> 
+    </a>
+  </div>
+  <div class="input-append pull-right">
+    <input type="text" name="q" value="{{ request.GET.q }}" class="search-query input-large">
+    {% for key, value in request.GET.items %}
+    {% ifnotequal key 'q' %}
+    <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endifnotequal key 'q' %}
+    {% endfor %}
+    <button type="submit" class="btn">Sök</button>
+  </div>
+</form>
+<small class="muted">
+<i>
+{% if article_list %}
+Visar {% ifequal request.GET.order 'ascending' %}älsta {% else %} nyaste{% endifequal %} artiklar
+
+{% if request.GET.q %}
+med "{{ request.GET.q }}" i titel eller i text
+{% endif %}
+
+{% if request.GET.tags %}
+som är taggade med {{ request.GET.tags }}
+{% endif %}
+
+{% if request.GET.tags %}
+<small class="muted"><a href="{{ request.path }}">(rensa)</a></small>
+{% endif %}
+
+{% else %}
+Inga resultat. 
+
+{% if request.GET.tags %}
+ <small class="muted"><a href="{{ request.path }}">(rensa)</a></small>
+{% endif %}
+{% endif %}
+</i>
+</small>  
+{% endblock filters %}
+
+<ul class="media-list">
+    {% for article in article_list %}
+    <li class="media">
+      <div class="media-body">
+        <h3 class="media-heading">
+          {% if request.GET.q %}
+          <a href="{{ article.get_absolute_url }}">{{ article.title|highlight:request.GET.q|safe }}</a>
+          {% else %}
+          <a href="{{ article.get_absolute_url }}">{{ article }}</a>
+          {% endif %}
+        </h3>
+        {% if 'full_stories' in request.GET.display or article.body|length < 50 %}
+        
+        {% if request.GET.q %}
+        {{ article.body|textile|highlight:request.GET.q|safe }}
+        {% else %}
+        {{ article.body|textile }}
+        {% endif %}
+
+        {% else %}
+        {{ article.body|textile|truncatewords:50 }} <a href="{{ article.get_absolute_url }}">Läs hela{% if article.allow_comments %} och kommentera <small><i class="icon-comment"></i> {{ article.comments.count }}</small>{% endif %}.</a>
+        {% endif %}
+
+        {% ifequal request.GET.display 'full_stories' %}<br><p><a href="{{ article.get_absolute_url }}">Kommentera artiklen</a> <small><i class="icon-comment"></i> {{ article.comments.count }}</small></p>{% endifequal %}
+      </div>
+
+    <div class="media attribution">
+        <a href="{{ article.created_by.profile.get_absolute_url }}" class="pull-left">
+          {% thumbnail article.created_by.profile.photo "80x80" crop="center" as im %}
+          <img class="img-circle"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+          {% empty %}
+          <img class="img-circle" src="http://placehold.it/80x80" alt="">
+          {% endthumbnail %}
+        </a>
+                      
+      <div class="media-body">
+          <a href="{{ article.created_by.profile.get_absolute_url }}">{{ article.created_by }}</a>
+          <br>
+          <span class="muted"><small>{{ article.date_created }} (<a href="{{ article.get_perma_url }}">permalänk</a>)</small></span>
+          <br>
+          {% for tag in article.user_tags.all %}
+          <span class="dropup">
+            <a class="dropdown-toggle btn btn-mini {% if tag.name in request.GET.tags %}active{% endif %}" data-toggle="dropdown" href="#">
+              {% if tag in user_categories %}
+              <i class="icon-eye-open"></i> 
+              {% endif %}
+              {{ tag|lower }}
+            </a>
+            <ul class="dropdown-menu">
+              {% if not tag.name in request.GET.tags %}
+              <li>
+                <a href="{{ request.path }}?{% format_get_params request.GET add_tag=tag.name %}">
+                  <i class="icon-filter"></i> Filtrera '{{ tag }}'
+                </a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=tag.name %}">
+                  <i class="icon-filter"></i> Ta bort filtrering '{{ tag }}'
+                </a>
+              </li>
+              {% endif %}
+              <li>
+                <a href="{{ request.path }}?tags={{ tag }}">
+                  <i class="icon-tag"></i> Gå till {{ headline|lower }} med '{{ tag }}'
+                </a>
+              </li>
+              {% if tag in user_categories %}
+              <li class="divider"></li>
+              <li>
+                <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
+                  {% csrf_token %}
+                  <formset class="hidden">
+                  <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
+                  </formset>
+                  <button type="submit" class="btn">
+                    <i class="icon-eye-close"></i> Avbevaka '{{ tag }}'
+                  </button>
+                </form>
+              </li>
+              {% else %}
+              <li>
+                <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
+                  {% csrf_token %}
+                  <formset class="hidden">
+                  <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
+                  </formset>
+                  <button type="submit" class="btn">
+                    <i class="icon-eye-open"></i> Bevaka '{{ tag }}'
+                  </button>
+                </form>
+              </li>
+              {% endif %}
+            </ul>
+          </span>
+          {% endfor %}
+
+          {% for group in request.user.groups.all %}
+          {% ifequal 'mod' group.name %}
+          {% for tag in article.mod_tags.all %}
+          <span class="dropup">
+            <a class="dropdown-toggle btn btn-mini btn-inverse" data-toggle="dropdown" href="#">
+              {{ tag|lower }}
+            </a>
+            <ul class="dropdown-menu">
+             <li><a href="#">Admin</a></li>
+            </ul>
+          </span>
+          {% endfor %}
+          {% endifequal %}
+          {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+  <ul>
+    {% for page in page_obj.paginator.page_range %}
+    {% if page == page_obj.number %}
+    <li class="active"><a href="#">{{ page_obj.number }}</a></li>
+    {% else %}
+    <li><a href="{{ request.get_full_path }}{% if request.GET %}&{% else %}?{% endif %}page={{ page }}">{{ page }}</a></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock content %}

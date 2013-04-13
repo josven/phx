@@ -10,9 +10,29 @@
     <!-- Le styles -->
     <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
     <style>
+      /* Write temp styles here, then move to stylesheet */
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+
+      /* ====== media ====== */
+      .media-list > .media {border-bottom: 1px solid silver; padding-bottom: 10px}
+      .media .img {float:left; margin-right: 10px;}
+      .media .img img{display:block;}
+      .media .imgExt{float:right; margin-left: 10px;}
+      .media.attribution, .media.attribution > .media-body {overflow: visible;}
+
+      .dropdown-menu li>form {
+        display: block;
+        padding: 3px 20px;
+        margin: 0;
+        clear: both;
+        font-weight: normal;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        }
+
     </style>
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -39,34 +59,68 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">phx</a>
+          <a class="brand visible-desktop" href="{% url 'start' %}">phx</a>
+          <a class="brand hidden-desktop" href="{% url 'start' %}">phx | {{ headline }}</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              {% block top_navigation %}
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              {% endblock top_navigation %}
-
+            {% block top_navigation %}
               {% if request.user.is_authenticated %}
-              <li><a href="{% url 'logout' %}">Logga ut</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Artiklar
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="{% url 'start' %}">Nyheter</a>
+                      <a href="{% url 'read_article' %}">Alla</a>
+                      <a href="{% url 'read_article' %}">Bevakade</a>
+                      <a href="{% url 'read_article' %}">Egna</a>
+                      <a href="{% url 'read_article' %}">Skapa</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a href="{% url 'logout' %}">Logga ut</a></li>
+              {% else %}
+                <li><a href="{% url 'login_view' %}">Logga in</a></li>
+                <li><a href="{% url 'register_view' %}">Registrera</a></li>
+                <li><a href="{% url 'about_view' %}">Om oss</a></li>
               {% endif %}
-              
+            {% endblock top_navigation %}
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+    
+    {% block messages %}
+    {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-block fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endblock messages %}
 
+    {% block container %}
     <div class="container">
 
-      <h1>{% block page_title %}{{ headline }}{% endblock page_title %}</h1>
+      <h1 class="visible-desktop">{% block page_title %}{{ headline }}{% endblock page_title %}</h1>
 
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
 
+    {% endblock container %}
     </div> <!-- /container -->
+
+    {% block navbar_bottom %}
+    {% endblock navbar_bottom %}
+    </div>
 
     <!-- Le javascript
     ================================================== -->

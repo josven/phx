@@ -213,14 +213,15 @@ LOCAL_APPS = (
     'core',
     'accounts',
     'articles',
-    'chat',
-    'forum',
+    #'chat',
+    #'forum',
     'frontpage',
-    'guestbook',
-    'notifications',
+    #'guestbook',
+    #'notifications',
     'profiles',
     'registration',
-    'settings',
+    #'settings',
+    'tags',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

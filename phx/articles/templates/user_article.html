@@ -1,0 +1,15 @@
+{% extends "profile.html" %}
+{% load entry_tags %}
+
+{% block content %}
+<ul class="flat-list entrylist">    
+    <li class="ui-widget ui-widget-content acticle_post"> 
+        {% render_entry article request %}
+    </li>
+</ul>
+
+{% if article.allow_comments %}
+{% include "_article_comments.html" %}
+{% endif %}
+
+{% endblock content %}

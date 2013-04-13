@@ -1,0 +1,139 @@
+{% load filters %}
+{% load compress %}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="sv"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>{% if request.notification_count %}({{request.notification_count}}) {% endif %}PHX</title>
+	<meta name="description" content="phx" />
+	<meta name="author" content="phx" />
+    
+    {% block css %}
+    
+    {% compress css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/fall11-theme/jquery-ui-1.8.16.custom.css?ac" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css?dc" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.less" type="text/less" media="screen" />
+    {% endcompress css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/{{ app_name }}.css?dc" />
+	{% endblock css %}
+    {% block script %}
+      
+    
+
+    {% compress js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/modernizr.v2.5.3pre.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/themeswitchertool.js"> </script>
+    <script defer type="text/javascript" src="{{ STATIC_URL }}js/plugins.js"></script>
+	<script defer type="text/javascript" src="{{ STATIC_URL }}js/script.js?dc"></script>
+    {% endcompress js %}
+    <script defer type="text/javascript" src="{{ STATIC_URL }}js/{{ app_name }}.js?dc"></script>
+    
+    {% endblock script %}
+</head>
+
+<body class="{{ app_name }} {% block body-classes %}{% endblock body-classes %} ui-widget-content">
+{% block body %}
+    {% if request.user.is_authenticated %}
+    
+
+    <div id="top-wrapper" class="ui-widget-content clearfix">
+        
+        <h1 id="main_logo">
+            <a href="{% url read_frontpage %}">PHX</a>
+        </h1>
+        
+        <nav id="primary_navigation">
+            {% block navigation %}
+            {% endblock navigation %}
+            <div id="switcher"></div>
+        </nav>
+     
+        <div id="account">
+            {% block account %}
+            <a data-ajax="false" id="account_button" href="{% url logout %}">Logga ut <span id="username">{{ request.user }}</span></a>
+            {% block settings-link %}<a data-ajax="false" href="{% url read_settings app_name %}">Inställningar</a>{% endblock settings-link %}
+            {% endblock account %}
+        </div>
+    </div>
+    {% endif %}
+    
+	<div id="container">
+        
+        {% block left-sidebar %}
+        {% if request.user.is_authenticated %}
+        <div id="left-sidebar">
+            <nav class="ui-widget ui-widget-content">
+                
+                    {% block app_header %}
+                    {% endblock app_header %}  
+                    
+                    {% block app_navigation %}
+                    {% endblock app_navigation %}       
+                
+                    {% block widgets %}
+                    <ul id="widget-online-users" class="flat-list">
+                        <li>
+                            <h4 class="ui-widget-header ui-helper-reset">Aktiva användare</h4>
+                        </li>
+
+                        {% for visitor in request.active_users %}
+                        {% if visitor.user != None %}
+                        <li>
+                            <a class="link-user" href="{{ visitor.user.get_profile.get_absolute_url }}">{{ visitor.user }}</a>   
+                            {% if visitor.last_update|minutessince > 5 %}
+                            <span class="ui-icon ui-icon-clock">&nbsp;</span>                        
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        <li>
+                            <hr>
+                        </li>
+                        
+                        <li>
+                            <a href="{% url list_accounts %}">Alla användare</a>
+                        </li>
+                    </ul>
+                    {% endblock widgets %}
+            </nav>
+        </div>
+        {% endif %}
+        {% endblock left-sidebar %}
+        
+        {% block messages %}
+        {% endblock messages %}
+        
+        {% block main %}
+		<div id="main" role="main">
+		{% block content %}
+		{% endblock content %}
+		</div>
+        {% endblock main %}
+        
+		<footer>
+		{% block footer %}
+        <a href="irc://irc.efnet.org/phx.se">IRC: phx.se@irc.efnet.org</a>
+		{% endblock footer %}
+		</footer>
+
+	</div> <!--! end of #container -->
+{% endblock body %}
+
+	<!-- JavaScript at the bottom for fast page loading -->
+	<!-- end scripts-->
+
+    {% comment %}
+	<!--[if lt IE 9 ]>
+	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+	<![endif]-->
+    {% endcomment %}
+</body>
+</html>

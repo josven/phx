@@ -1,0 +1,67 @@
+/* List threads, data tables styles */
+div.dataTables_length {
+	float: left;
+}
+
+div.dataTables_filter {
+	float: right;
+}
+
+div.dataTables_info {
+	float: left;
+}
+
+div.dataTables_paginate {
+	float: right;
+}
+
+div.dataTables_length,
+div.dataTables_filter,
+div.dataTables_paginate,
+div.dataTables_info {
+	padding: 6px;
+}
+
+
+table#notification_table a {
+    font-weight:bold;
+    text-decoration:none;
+}
+
+table#notification_table .button-mark {
+    font-size:80%;
+}
+
+table#notification_table {
+	clear: both;
+    width: 100%;
+}
+
+table#notification_table td,
+table#notification_table th {
+	padding: 5px;
+}
+
+div.form_wrapper  {
+    float:right;
+}
+
+div.dataTables_wrapper:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+html[xmlns] .dataTables_wrapper { display: block; }
+* html .dataTables_wrapper { height: 1%; }
+
+
+#notification_table_wrapper .remove-notes { 
+	text-align: right;
+	margin: 5px; 
+	font-size: 60%;
+}
+
+#notification_table_wrapper .ui-toggle-button { font-size: 60%;}

@@ -1,0 +1,215 @@
+{% extends "forum.html" %}
+{% load entry_tags %}
+{% load markup %}
+{% load thumbnail %}
+{% load humanize %}
+{% do_assign jumps 0 %}
+
+{% block content %}
+    <div class="thead_wrapper">
+        {% for post in posts %}    
+            {% if jumps %}
+            {% for jump in post.hierarchy_level|jumpdowns:jumps %}
+            {% if forloop.first %}
+            </ul>
+            {% else %}
+            <li class="full_width_reply">
+                <form class="orphan-form" action="{% url create_forumpost %}" method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="fieldWrapper">
+                        {{ form.subject.errors }}
+                        {{ form.body }}
+                    </div>
+
+                    <input class="ui-helper-hidden" type="text" name="thread_id" id="id_thread_id" value="{{ thread.id }}">
+                    <input class="ui-helper-hidden" type="text" name="parent_id" id="id_parent_id" value="{{ post.id }}">
+                    <input class="ui-helper-hidden save_method" type="text" name="save_method" id="save_method_id" value="continue">
+
+                    <p class="ui-helper-hidden">
+                        <button class="js-collapse">Göm</button>
+                        <input type="submit" value="Svara" />
+                    </p>
+                </form>
+            </li> 
+            </ul>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            
+            
+            {% if post.first_in_subthread %}
+            <ul class="subthread ui-widget-content oldforum"><!-- start subthread -->
+            {% endif %}
+            
+            {% if forloop.first %}
+            <li class="forum_post ui-widget ui-widget-content">
+            {% thread_header post %}
+            </li><!-- End thread header -->
+            {% endif %}
+            
+            <!-- START POST -->
+            <li id="post-{{ post.id }}" class="forum_post entry ui-widget ui-widget-content">
+                
+                <h4 class="ui-widget-header entry-head">
+                    <a class="link-user" href="{% url read_profile post.created_by.id %}">{{ post.created_by }}</a> - {{ post.date_created|naturalday  }} {{ post.date_created|time:"TIME_FORMAT"  }}
+                    <div class="button-wrapper">
+                        <a href="#" data-reply-to="{{ post.created_by }}" class="js-reply">Svara</a>
+                    </div>
+                </h4>
+
+                <ul class="username-hover-menu ui-helper-hidden ui-widget ui-widget-content">
+                    <li><a href="{% url read_profile post.created_by.id %}">Profil</a></li>
+                    <li><a href="{% url guestbook post.created_by.id %}">Gästbok</a></li>
+                </ul>  
+                
+                {% if post.created_by.get_profile.photo %}
+                <div class="entry-profile clearfix">
+                    {% thumbnail post.created_by.get_profile.photo "75x75" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                    {% endthumbnail %}   
+                </div>
+                {% endif %}
+    
+                <div class="entry-content clearfix">
+                    {{ post.body|urlize|textile }}
+                    <div class="ui-helper-hidden">
+                        {% include "reply_form.html" %}
+                    </div>
+                </div>
+            </li><!-- END POST -->
+            
+            {% if post.last_in_subthread %}
+            <li class="full_width_reply">
+                {% include "reply_form.html" %}
+            </li>     
+            {% if forloop.last %}
+            {% for jump in post.hierarchy_level|jumpdowns:jumps %}
+            {% if forloop.first %}
+            </ul>
+            
+            <li class="full_width_reply">
+                <form class="orphan-form" action="{% url create_forumpost %}" method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="fieldWrapper">
+                        {{ form.subject.errors }}
+                        {{ form.body }}
+                    </div>
+
+                    <input class="ui-helper-hidden" type="text" name="thread_id" id="id_thread_id" value="{{ thread.id }}">
+                    <input class="ui-helper-hidden" type="text" name="parent_id" id="id_parent_id" value="{{ post.id }}">
+                    <input class="ui-helper-hidden save_method" type="text" name="save_method" id="save_method_id" value="continue">
+
+                    <p class="ui-helper-hidden">
+                        <button class="js-collapse">Göm</button>
+                        <input type="submit" value="Svara" />
+                    </p>
+                </form>
+                
+            </li>
+            </ul>
+            
+            {% endif %}
+            
+            {% endfor %}
+            
+            
+            {% endif %}
+            {% do_assign jumps post.hierarchy_level %}
+            {% else %}           
+            {% do_assign jumps 0 %}     
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+
+ {% comment %}   
+    <div class="thead_wrapper">
+    {% for post in posts %}
+        {% if post.first_in_subthread or forloop.first %}
+        <ul class="subthread ui-widget-content">
+        {% endif %}
+            
+            {% if forloop.first %}
+            <li class="forum_post ui-widget ui-widget-content">
+            {% thread_header post %}
+            </li><!-- End thread header -->
+            {% endif %}
+            
+            <li id="post-{{ post.id }}" class="forum_post entry ui-widget ui-widget-content">
+                
+                {% entry_head post %}
+                
+                {% if post.created_by.get_profile.photo %}
+                <div class="entry-profile clearfix">
+                    {% thumbnail post.created_by.get_profile.photo "75x75" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                    {% endthumbnail %}   
+                </div>
+                {% endif %}
+    
+                <div class="entry-content clearfix">
+                
+                {{ post.body|urlize|textile }}
+                
+                    <div class="ui-helper-hidden">
+                        {% include "reply_form.html" %}
+                    </div>
+                </div>
+ 
+            </li><!-- End post -->
+        
+        {% if post.last_in_subthread or forloop.last %}
+            <li class="full_width_reply">
+            {% include "reply_form.html" %}
+            </li>
+        </ul><!-- End subthread -->
+        {% endif %}
+    {% endfor %}
+    </div>
+ {% endcomment %}        
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+    {% comment %}
+    
+    <h2>{{ thread.title }} - <a href="{{ thread.created_by.get_profile.get_absolute_url }}">{{ thread.created_by }}</a></h2>
+    
+    {% for post in posts %}
+        {% if post.first_in_subthread %}<div class="subthread" style="margin-left: 16px; border: solid 1px red;">{% endif %}
+        <div class="forum_post">
+            {{ post.body }}
+            {% if post.last_in_subthread %}
+                <div class="full_width_reply">Svara</div>
+                {% include "reply_form.html" %}
+            {% else %}
+                <div class="small_reply">Svara</div>
+                {% include "reply_form.html" %}
+            {% endif %}
+        </div>
+        {% if post.last_in_subthread %}</div>{% endif %}
+    {% endfor %}
+    
+    {% endcomment %}
+    
+{% endblock content %}

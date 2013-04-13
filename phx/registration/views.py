@@ -15,6 +15,8 @@ from braces.views import SetHeadlineMixin
 from .forms import AuthenticationForm
 from .forms import UserCreationForm
 
+from profiles.models import Profile
+
 
 class LoginView(SetHeadlineMixin, FormView):
     headline = "Välkommen till PHX!"
@@ -30,7 +32,11 @@ class LoginView(SetHeadlineMixin, FormView):
 
     def form_valid(self, form):
         user = form.get_user()
-        login(self.request, user)
+        login(self.request, user)   
+
+        # If theres a user profile
+        obj, created = Profile.objects.get_or_create(user=user)
+
         if self.request.POST.get('keep_session', None):
             self.request.session.set_expiry(timedelta(days=365))
         else:

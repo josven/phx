@@ -1,0 +1,389 @@
+/////////////////
+// Semantic.gs // for LESS: http://lesscss.org/
+/////////////////
+
+// Defaults which you can freely override
+@column-width: 60;
+@gutter-width: 20;
+@columns: 12;
+
+// Utility variable — you should never need to modify this
+@gridsystem-width: (@column-width*@columns) + (@gutter-width*@columns) * 1px;
+
+// Set @total-width to 100% for a fluid layout
+@total-width: @gridsystem-width;
+
+// Uncomment these two lines and the star-hack width/margin lines below to enable sub-pixel fix for IE6 & 7. See http://tylertate.com/blog/2012/01/05/subpixel-rounding.html
+// @min-width: 960;
+// @correction: 0.5 / @min-width * 100 * 1%;
+
+// The micro clearfix http://nicolasgallagher.com/micro-clearfix-hack/
+.clearfix() {
+   *zoom:1;
+   
+   &:before,
+   &:after {
+       content:"";
+       display:table;
+   }
+   &:after {
+       clear:both;
+   }
+}
+
+
+//////////
+// GRID //
+//////////
+
+body {
+   width: 100%;
+   .clearfix;
+}
+
+.row(@columns:@columns) {
+   display: block;
+   width: @total-width*((@gutter-width + @gridsystem-width)/@gridsystem-width);
+   margin: 0 @total-width*(((@gutter-width*.5)/@gridsystem-width)*-1);
+   // *width: @total-width*((@gutter-width + @gridsystem-width)/@gridsystem-width)-@correction;
+   // *margin: 0 @total-width*(((@gutter-width*.5)/@gridsystem-width)*-1)-@correction;
+   .clearfix;
+}
+.column(@x,@columns:@columns) {
+   display: inline;
+   float: left;
+   width: @total-width*((((@gutter-width+@column-width)*@x)-@gutter-width) / @gridsystem-width);
+   margin: 0 @total-width*((@gutter-width*.5)/@gridsystem-width);
+   // *width: @total-width*((((@gutter-width+@column-width)*@x)-@gutter-width) / @gridsystem-width)-@correction;
+   // *margin: 0 @total-width*((@gutter-width*.5)/@gridsystem-width)-@correction;
+}
+.push(@offset:1) {
+   margin-left: @total-width*(((@gutter-width+@column-width)*@offset) / @gridsystem-width) + @total-width*((@gutter-width*.5)/@gridsystem-width);
+}
+.pull(@offset:1) {
+   margin-right: @total-width*(((@gutter-width+@column-width)*@offset) / @gridsystem-width) + @total-width*((@gutter-width*.5)/@gridsystem-width);
+}
+
+@columns: 12;
+@column-width: 60;
+@gutter-width: 20;
+@total-width: 100%;
+
+
+#main_logo{
+   .column(2);
+}
+
+#primary_navigation{
+   .column(8);
+}
+
+#switcher {
+display: inline-block;
+}
+
+#account{
+   .column(2);
+}
+
+
+#left-sidebar {
+   .column(2);
+   overflow: hidden;
+}
+#main{
+   .column(10);
+   overflow: hidden;
+}
+
+ 
+
+footer {
+   .column(12);
+}
+
+
+// Registration
+// - login, register, forgot password
+//
+body.registration #main {
+   .column(5);
+   .push(3);
+   .pull(3);
+
+   form ul li {
+
+      .column(6,6);
+      margin-top: 10px;
+
+      label {
+         .column(2,6);
+      }
+
+      .helptext {
+         .column(3,6);
+         .push(4,6);
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+}
+
+// Camchat
+// 
+//
+
+body.camchat #main {
+    .column(12);
+}
+
+// Frontpage
+// 
+//
+body.frontpage #main {
+   form ul li {
+
+      .column(10,10);
+      margin-top: 10px;
+
+      textarea {
+         width: 100%;
+         height: 50px;
+      }
+
+      .helptext {
+         display:none;
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+
+   form ul li.buttonpanel {
+         .column(10,10);
+         margin-bottom: 10px;
+      }
+}
+
+// ui-state-maximized dialogs
+
+//// Profiles
+// 
+//
+
+body.profiles form#user-form-settings label {
+      .column(2,10);
+}
+
+//// Accounts  
+// 
+//
+
+body.accounts form#account-form-settings label {
+      .column(2,10);
+}
+
+//// forum  
+// 
+//
+
+body.forum #main {
+   form ul li {
+
+      .column(10,10);
+      margin-top: 10px;
+
+      textarea {
+         width: 100%;
+         height: 50px;
+      }
+
+      .helptext {
+         display:none;
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+
+   form ul li.buttonpanel {
+         .column(10,10);
+         margin-bottom: 10px;
+      }
+}
+
+
+body.forum form#forum-form-create > label {
+      .column(9,10);
+      margin-top: 10px;
+      margin-bottom: 10px;
+}
+
+body.forum form#forum-form-create > p > label {
+      .column(2,10);
+}
+body.forum form#forum-form-create > div > label {
+      .column(2,10);
+}
+
+body.forum form#forum-form-create .tag-wrapper {
+         .column(5,10);
+         display: inline-block;
+         float: none;
+         margin-left:0;
+}
+
+body.forum form#forum-form-create #field-wrapper-body span.helptext {
+   display:none;
+}
+
+//// Chat  
+// 
+//
+
+body.chat #main {
+   form ul li {
+
+      .column(10,10);
+      margin-top: 10px;
+
+      textarea {
+         width: 100%;
+         height: 50px;
+      }
+
+      .helptext {
+         display:none;
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+
+   form ul li.buttonpanel {
+         .column(10,10);
+         margin-bottom: 10px;
+      }
+}
+
+//// Guestbook  
+// 
+//
+
+body.guestbook #main {
+   form ul li {
+
+      .column(10,10);
+      margin-top: 10px;
+
+      textarea {
+         width: 100%;
+         height: 50px;
+      }
+
+      .helptext {
+         display:none;
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+
+   form ul li.buttonpanel {
+         .column(10,10);
+         margin-bottom: 10px;
+      }
+
+   #guestbook-form-wrapper.ui-helper-hidden * {
+      display:none;
+   }
+}
+
+//// Articles  
+// 
+//
+
+body.articles #main {
+   form ul li {
+
+      .column(10,10);
+      margin-top: 10px;
+
+      textarea {
+         width: 100%;
+         height: 50px;
+      }
+
+      .helptext {
+         display:none;
+      }
+
+      .errorlist li {
+         .column(3,6);
+         .push(4,6); 
+      }
+   }
+
+   form ul li.buttonpanel {
+         .column(10,10);
+         margin-bottom: 10px;
+      }
+}
+
+
+body.articles form#articles-form-create > label {
+      .column(9,10);
+      margin-top: 10px;
+      margin-bottom: 10px;
+}
+
+body.articles form#articles-form-create > p > label {
+      .column(2,10);
+}
+body.articles form#articles-form-create > div > label {
+      .column(2,10);
+}
+
+body.articles form#articles-form-create .tag-wrapper {
+         .column(5,10);
+         display: inline-block;
+         float: none;
+         margin-left:0;
+}
+
+body.articles form#articles-form-create #field-wrapper-body span.helptext {
+   display:none;
+}
+
+.ui-state-maximized {
+   .column(11);
+   
+   margin:0;
+
+   label {
+      display:none !important;
+   }
+   
+   input {
+      display:none !important;
+   }
+
+   textarea {
+      .column(8,11);
+   }
+
+    .helptext {
+      .column(2,11);
+   }  
+}
