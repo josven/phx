@@ -17,11 +17,14 @@
           <a href="{{ article.get_absolute_url }}">{{ article }}</a>
           {% endif %}
         </h3>
-        {% if request.GET.q %}
-        {{ article.body|textile|highlight:request.GET.q|safe }}
-        {% else %}
-        {{ article.body|textile }}
-        {% endif %}
+
+        <div class="media-content">
+          {% if request.GET.q %}
+          {{ article.body|textile|highlight:request.GET.q|urlize|safe }}
+          {% else %}
+          {{ article.body|textile|urlize }}
+          {% endif %}
+        </div>
       </div>
 
       <div class="media attribution">
@@ -106,13 +109,13 @@
     <div class="media">
     {% endif %}
       <a class="pull-left" href="#">
-        <img class="media-object" src="http://placehold.it/64x64">
+        <img class="media-object img-circle" src="http://placehold.it/64x64">
       </a>
 
       <div class="media-body">
         <h4 class="media-heading">{{ node.created_by }} <small class="muted">| {{ node.added }} </small></h4>
 
-        {{ node.comment }}
+        {{ node.comment|textile|urlize }}
 
         {% if children %}
         {{ children }}

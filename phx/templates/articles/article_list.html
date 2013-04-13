@@ -155,15 +155,19 @@ Inga resultat.
           <a href="{{ article.get_absolute_url }}">{{ article }}</a>
           {% endif %}
         </h3>
-        {% if 'full_stories' in request.GET.display or article.body|length < 50 %}
-        
-        {% if request.GET.q %}
-        {{ article.body|textile|highlight:request.GET.q|safe }}
-        {% else %}
-        {{ article.body|textile }}
-        {% endif %}
-        {% else %}
-        {{ article.body|textile|truncatewords:50 }} 
+
+        <div class="media-content">
+          {% if 'full_stories' in request.GET.display or article.body|length < 50 %}
+          
+          {% if request.GET.q %}
+          {{ article.body|textile|highlight:request.GET.q|urlize|safe }}
+          {% else %}
+          {{ article.body|textile|urlize }}
+          {% endif %}
+          {% else %}
+          {{ article.body|textile|truncatewords:50|urlize }}
+        </div>
+
         <p>
           <a href="{{ article.get_absolute_url }}">Läs hela{% if article.allow_comments %} och kommentera <small><i class="icon-comment"></i> {{ article.comments.count }}</small>{% endif %}.</a>
         </p>
