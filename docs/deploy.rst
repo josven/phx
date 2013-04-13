@@ -16,11 +16,11 @@ This is an example of how phx is deployed in production in linux.
 Prerequisites
 =============
 
-git http://git-scm.com/
-setuptools https://pypi.python.org/pypi/setuptools
-pip http://www.pip-installer.org/
-virtualenv http://www.virtualenv.org/
-Apache server http://httpd.apache.org/
+- git http://git-scm.com/
+- setuptools https://pypi.python.org/pypi/setuptools
+- pip http://www.pip-installer.org/
+- virtualenv http://www.virtualenv.org/
+- Apache server http://httpd.apache.org/
 
 Get the code with git
 =====================
