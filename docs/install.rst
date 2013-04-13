@@ -83,6 +83,15 @@ Installation of dependencies
 =============================
 
 Depending on where you are installing dependencies:
+Make sure that you using your virtual enviroment.
+
+If you are using virtualenvwrapper::
+
+    $ workon phx-dev
+
+Or just if you just using Virtualenv::
+
+    $ . /path_to_enviroment/bin/activate
 
 In development::
 
