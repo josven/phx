@@ -83,7 +83,9 @@ Installation of dependencies
 =============================
 
 Depending on where you are installing dependencies:
-Make sure that you using your virtual enviroment.
+
+
+First make sure that you using your virtual enviroment.
 
 If you are using virtualenvwrapper::
 
@@ -93,7 +95,7 @@ Or just if you just using Virtualenv::
 
     $ . /path_to_enviroment/bin/activate
 
-In development::
+Then install dependencies::
 
     $ pip install -r requirements/local.txt
 
