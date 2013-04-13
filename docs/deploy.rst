@@ -10,17 +10,17 @@ This is an example of how phx is deployed in production in linux.
 #. Installation of dependencies
 #. Set up database
 #. Set up Apache and mod_wgsi
-#. ???????
+#. *???????*
 #. Profit!
 
 Prerequisites
 =============
 
-- git http://git-scm.com/
-- setuptools https://pypi.python.org/pypi/setuptools
-- pip http://www.pip-installer.org/
-- virtualenv http://www.virtualenv.org/
-- Apache server http://httpd.apache.org/
+git http://git-scm.com/
+setuptools https://pypi.python.org/pypi/setuptools
+pip http://www.pip-installer.org/
+virtualenv http://www.virtualenv.org/
+Apache server http://httpd.apache.org/
 
 Get the code with git
 =====================
@@ -28,7 +28,7 @@ Get the code with git
 Go were you want to have to code, example ~/phx
 Then use git to clone the repository::
 
-	$ git clone git://github.com/josven/phx.git
+    $ git clone git://github.com/josven/phx.git
 
 Create your production environment
 ==================================
@@ -36,7 +36,7 @@ Create your production environment
 Go were you want to have to your enviroments, example ~/env
 Then create the enviroments::
 
-	$ virtualenv --distribute phx
+    $ virtualenv --distribute phx
 
 Installation of dependencies
 =============================
@@ -54,7 +54,6 @@ Then install dependencies::
 
 Set up database
 ===============
-TODO
 
 
 Set up project environment variables‎
@@ -63,12 +62,10 @@ Set up project environment variables‎
 Secret and sensetive settings are keeps out from this project.
 You have to set some of the settings in you system environment variables‎::
 
-	$ export PHX_SECRET_KEY=SECRETKEY
-	$ export PHX_DB_NAME=DATABASE
-	$ export PHX_DB_USER=USER
-	$ export PHX_DB_PASSWORD=PASSWORD
+    $ export PHX_SECRET_KEY=SECRETKEY
+    $ export PHX_DB_NAME=DATABASE
+    $ export PHX_DB_USER=USER
+    $ export PHX_DB_PASSWORD=PASSWORD
 
 Set up Apache and mod_wgsi
 ==========================
-TODO
-
