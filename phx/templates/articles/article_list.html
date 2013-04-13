@@ -129,14 +129,14 @@ med "{{ request.GET.q }}" i titel eller i text
 som är taggade med {{ request.GET.tags }}
 {% endif %}
 
-{% if request.GET.tags %}
+{% if request.GET %}
 <small class="muted"><a href="{{ request.path }}">(rensa)</a></small>
 {% endif %}
 
 {% else %}
 Inga resultat. 
 
-{% if request.GET.tags %}
+{% if request.GET %}
  <small class="muted"><a href="{{ request.path }}">(rensa)</a></small>
 {% endif %}
 {% endif %}
@@ -162,101 +162,108 @@ Inga resultat.
         {% else %}
         {{ article.body|textile }}
         {% endif %}
-
         {% else %}
-        {{ article.body|textile|truncatewords:50 }} <a href="{{ article.get_absolute_url }}">Läs hela{% if article.allow_comments %} och kommentera <small><i class="icon-comment"></i> {{ article.comments.count }}</small>{% endif %}.</a>
+        {{ article.body|textile|truncatewords:50 }} 
+        <p>
+          <a href="{{ article.get_absolute_url }}">Läs hela{% if article.allow_comments %} och kommentera <small><i class="icon-comment"></i> {{ article.comments.count }}</small>{% endif %}.</a>
+        </p>
         {% endif %}
 
-        {% ifequal request.GET.display 'full_stories' %}<br><p><a href="{{ article.get_absolute_url }}">Kommentera artiklen</a> <small><i class="icon-comment"></i> {{ article.comments.count }}</small></p>{% endifequal %}
+        {% ifequal request.GET.display 'full_stories' %}
+        <p>
+          <a href="{{ article.get_absolute_url }}">Kommentera artiklen</a> <small><i class="icon-comment"></i> {{ article.comments.count }}</small>
+        </p>
+        {% endifequal %}
       </div>
 
-    <div class="media attribution">
-        <a href="{{ article.created_by.profile.get_absolute_url }}" class="pull-left">
-          {% thumbnail article.created_by.profile.photo "80x80" crop="center" as im %}
-          <img class="img-circle"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-          {% empty %}
-          <img class="img-circle" src="http://placehold.it/80x80" alt="">
-          {% endthumbnail %}
-        </a>
-                      
-      <div class="media-body">
-          <a href="{{ article.created_by.profile.get_absolute_url }}">{{ article.created_by }}</a>
-          <br>
-          <span class="muted"><small>{{ article.date_created }} (<a href="{{ article.get_perma_url }}">permalänk</a>)</small></span>
-          <br>
-          {% for tag in article.user_tags.all %}
-          <span class="dropup">
-            <a class="dropdown-toggle btn btn-mini {% if tag.name in request.GET.tags %}active{% endif %}" data-toggle="dropdown" href="#">
-              {% if tag in user_categories %}
-              <i class="icon-eye-open"></i> 
-              {% endif %}
-              {{ tag|lower }}
-            </a>
-            <ul class="dropdown-menu">
-              {% if not tag.name in request.GET.tags %}
-              <li>
-                <a href="{{ request.path }}?{% format_get_params request.GET add_tag=tag.name %}">
-                  <i class="icon-filter"></i> Filtrera '{{ tag }}'
-                </a>
-              </li>
-              {% else %}
-              <li>
-                <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=tag.name %}">
-                  <i class="icon-filter"></i> Ta bort filtrering '{{ tag }}'
-                </a>
-              </li>
-              {% endif %}
-              <li>
-                <a href="{{ request.path }}?tags={{ tag }}">
-                  <i class="icon-tag"></i> Gå till {{ headline|lower }} med '{{ tag }}'
-                </a>
-              </li>
-              {% if tag in user_categories %}
-              <li class="divider"></li>
-              <li>
-                <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
-                  {% csrf_token %}
-                  <formset class="hidden">
-                  <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
-                  </formset>
-                  <button type="submit" class="btn">
-                    <i class="icon-eye-close"></i> Avbevaka '{{ tag }}'
-                  </button>
-                </form>
-              </li>
-              {% else %}
-              <li>
-                <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
-                  {% csrf_token %}
-                  <formset class="hidden">
-                  <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
-                  </formset>
-                  <button type="submit" class="btn">
-                    <i class="icon-eye-open"></i> Bevaka '{{ tag }}'
-                  </button>
-                </form>
-              </li>
-              {% endif %}
-            </ul>
-          </span>
-          {% endfor %}
+      <div class="media attribution">
+          <a href="{{ article.created_by.profile.get_absolute_url }}" class="pull-left">
+            {% thumbnail article.created_by.profile.photo "80x80" crop="center" as im %}
+            <img class="img-circle"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% empty %}
+            <img class="img-circle" src="http://placehold.it/80x80" alt="">
+            {% endthumbnail %}
+          </a>
+                        
+        <div class="media-body">
+            <a href="{{ article.created_by.profile.get_absolute_url }}">{{ article.created_by }}</a>
+            <br>
+            <span class="muted"><small>{{ article.date_created }} (<a href="{{ article.get_perma_url }}">permalänk</a>)</small></span>
+            <br>
+            {% for tag in article.user_tags.all %}
+            <span class="dropup">
+              <a class="dropdown-toggle btn btn-mini {% if tag.name in request.GET.tags %}active{% endif %}" data-toggle="dropdown" href="#">
+                {% if tag in user_categories %}
+                <i class="icon-eye-open"></i> 
+                {% endif %}
+                {{ tag|lower }}
+              </a>
+              <ul class="dropdown-menu">
+                {% if not tag.name in request.GET.tags %}
+                <li>
+                  <a href="{{ request.path }}?{% format_get_params request.GET add_tag=tag.name %}">
+                    <i class="icon-filter"></i> Filtrera '{{ tag }}'
+                  </a>
+                </li>
+                {% else %}
+                <li>
+                  <a href="{{ request.path }}?{% format_get_params request.GET remove_tag=tag.name %}">
+                    <i class="icon-filter"></i> Ta bort filtrering '{{ tag }}'
+                  </a>
+                </li>
+                {% endif %}
+                <li>
+                  <a href="{{ request.path }}?tags={{ tag }}">
+                    <i class="icon-tag"></i> Gå till {{ headline|lower }} med '{{ tag }}'
+                  </a>
+                </li>
+                {% if tag in user_categories %}
+                <li class="divider"></li>
+                <li>
+                  <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
+                    {% csrf_token %}
+                    <formset class="hidden">
+                    <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
+                    </formset>
+                    <button type="submit" class="btn">
+                      <i class="icon-eye-close"></i> Avbevaka '{{ tag }}'
+                    </button>
+                  </form>
+                </li>
+                {% else %}
+                <li>
+                  <form class="form-inline" action="{% url 'subscribe_tag' request.user.id %}" method="POST">
+                    {% csrf_token %}
+                    <formset class="hidden">
+                    <input id="id_name" maxlength="255" name="name" type="text" value="{{ tag.name }}">
+                    </formset>
+                    <button type="submit" class="btn">
+                      <i class="icon-eye-open"></i> Bevaka '{{ tag }}'
+                    </button>
+                  </form>
+                </li>
+                {% endif %}
+              </ul>
+            </span>
+            {% endfor %}
 
-          {% for group in request.user.groups.all %}
-          {% ifequal 'mod' group.name %}
-          {% for tag in article.mod_tags.all %}
-          <span class="dropup">
-            <a class="dropdown-toggle btn btn-mini btn-inverse" data-toggle="dropdown" href="#">
-              {{ tag|lower }}
-            </a>
-            <ul class="dropdown-menu">
-             <li><a href="#">Admin</a></li>
-            </ul>
-          </span>
-          {% endfor %}
-          {% endifequal %}
-          {% endfor %}
+            {% for group in request.user.groups.all %}
+            {% ifequal 'mod' group.name %}
+            {% for tag in article.mod_tags.all %}
+            <span class="dropup">
+              <a class="dropdown-toggle btn btn-mini btn-inverse" data-toggle="dropdown" href="#">
+                {{ tag|lower }}
+              </a>
+              <ul class="dropdown-menu">
+               <li><a href="#">Admin</a></li>
+              </ul>
+            </span>
+            {% endfor %}
+            {% endifequal %}
+            {% endfor %}
+        </div>
       </div>
-    </div>
+    </li>
     {% endfor %}
 </ul>
 

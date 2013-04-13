@@ -16,7 +16,8 @@
       }
 
       /* ====== media ====== */
-      .media-list > .media {border-bottom: 1px solid silver; padding-bottom: 10px}
+      /* .media-list > .media {border-bottom: 1px solid silver; padding-bottom: 10px} */
+      .media-list > .media {padding-bottom: 10px}
       .media .img {float:left; margin-right: 10px;}
       .media .img img{display:block;}
       .media .imgExt{float:right; margin-left: 10px;}
@@ -31,6 +32,15 @@
         line-height: 20px;
         color: #333;
         white-space: nowrap;
+        }
+
+      .highlighted {
+        background-color: #ee9;
+        padding: 0 1px;
+        margin: 0 1px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
         }
 
     </style>
@@ -73,10 +83,10 @@
                   <ul class="dropdown-menu">
                     <li>
                       <a href="{% url 'start' %}">Nyheter</a>
-                      <a href="{% url 'read_article' %}">Alla</a>
-                      <a href="{% url 'read_article' %}">Bevakade</a>
-                      <a href="{% url 'read_article' %}">Egna</a>
-                      <a href="{% url 'read_article' %}">Skapa</a>
+                      <a href="{% url 'list_articles' %}">Alla</a>
+                      <a href="{% url 'list_articles' %}">Bevakade</a>
+                      <a href="{% url 'list_articles' %}">Egna</a>
+                      <a href="{% url 'list_articles' %}">Skapa</a>
                     </li>
                   </ul>
                 </li>

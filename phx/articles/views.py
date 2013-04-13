@@ -25,6 +25,7 @@ from .forms import ArticleCommentForm
 # New stuff
 from django.db.models import Count
 from django.views.generic import ListView
+from django.views.generic import DetailView
 from braces.views import SetHeadlineMixin
 from braces.views import LoginRequiredMixin
 from braces.views import SelectRelatedMixin
@@ -73,6 +74,11 @@ class ArticleListView(ObjectSearchMixin, ListOrderingMixin, TagSearchMixin, Sele
             kwargs['active_tags'] = UserTags.objects.filter(
                 name__in=active_tags.split(','))
         return super(ArticleListView, self).get_context_data(**kwargs)
+
+
+class ArticleDetailView(DetailView):
+    model = Article
+
 
 # Old stuff
 

@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from django.conf import urls
 
 from .views import ArticleListView
+from .views import ArticleDetailView
 
 urlpatterns = patterns('',  
     
@@ -9,20 +10,21 @@ urlpatterns = patterns('',
     url(
         regex=r'^artiklar/$',
         view=ArticleListView.as_view(),
-        name='read_article'
+        name='list_articles'
     ),
     # Return a single article based on id
     url(
-        regex=r'^artiklar/(?P<id>\d*)/$',
-        view='articles.views.read_article',
+        regex=r'^artiklar/(?P<pk>\d*)/$',
+        view=ArticleDetailView.as_view(),
         name='read_article'
     ),
     # Return a single article based on slug
     url(
         regex=r'^artiklar/(?P<slug>[-\w]+)/$',
-        view='articles.views.read_article',
+        view=ArticleDetailView.as_view(),
         name='read_article'
     ),
+
     # OLD STUFF
     #json for datatables
     url(r'^articles/list/json/$', 'articles.views.list_articles_json', name='list_articles_json'),
