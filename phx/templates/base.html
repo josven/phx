@@ -80,11 +80,6 @@
     <!-- Use this to quickly test CSS changes in a template, 
         then move to project.css -->
 
-    {# TODO: IF USER WANTS O EMBED #}
-    <link href="{{ STATIC_URL }}lib/jquery-oembed-all/jquery.oembed.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}lib/markitup/1.x/markitup/skins/markitup/style.css"
-    >
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}lib/markitup/1.x/markitup/sets/textile/style.css" />
     {% block extra_css %}{% endblock extra_css %}
   </head>
 
@@ -168,9 +163,9 @@
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 
     {# TODO: IF USER WANTS O EMBED #}
-    <script src="{{ STATIC_URL }}lib/jquery-oembed-all/jquery.oembed.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/markitup/1.x/markitup/jquery.markitup.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}lib/markitup/1.x/markitup/sets/textile/set.js"></script>
+    <script src="{{ STATIC_URL }}js/lib/jquery-oembed-all/jquery.oembed.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/lib/markitup/1.x/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/lib/markitup/1.x/markitup/sets/textile/set.js"></script>
 
     <!-- place project specific Javascript in this file -->
     <script src="{{ STATIC_URL }}js/project.js"></script>
