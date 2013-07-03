@@ -25,7 +25,7 @@
           </li>
           {% endfor %}
           {% endif %}
-
+          
           <li class="nav-header">Huvudkategorier</li>
           {% for category in main_categories %}
           {% if category.name in request.GET.tags %}

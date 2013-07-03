@@ -21,7 +21,6 @@ urlpatterns = patterns(
     #(r'^notifications/', include('notifications.urls')),
     (r'^', include('articles.urls')),
     #(r'^accounts/', include('accounts.urls')),
-
 )
 
 if settings.DEBUG:
