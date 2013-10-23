@@ -98,7 +98,7 @@ First you need pip intaller and virtualenv
 
     https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
     
-* Execute script in python, open cmd.exe: Start menu > run > powershell [enter]::
+* Execute script in python, open cmd.exe: Start menu > run > cmd [enter]::
 
     C:\python path_to_downloaded_script/ez_setup.py
     
@@ -153,7 +153,7 @@ Installation of dependencies
 Windows 7
 ---------
 
-* Open powershell
+* Open cmd
 * Make sure you have the phx enviroment active
 * Navigate to your local repository of the phx code (Documents/GitHub/phx/)::
 
