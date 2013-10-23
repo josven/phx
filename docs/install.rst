@@ -20,7 +20,8 @@ Windows 7
 
 - Download and install python from http://python.org/download/
 
-- Adjust your PATH environment variable to include paths to Python executable and additional scripts. Add to PATH:
+- Adjust your PATH environment variable to include paths to Python executable and additional scripts. Add to PATH::
+
     C:\Python27\;C:\Python27\Scripts;
 
 
@@ -42,12 +43,12 @@ https://help.github.com/articles/set-up-git
 
 If you already have an github account and git installed, you can skip this step.
 
+
 Get the code
 ============
 
-
-Windows 7, the easy way
------------------------
+Windows 7
+---------
 - Go to http://github.com and login
 - Go to http://github.com/josven/phx/ and click the "Clone to desktop" button on your right side. This will automagic clone the phx repository on your local machine.
 
@@ -60,12 +61,68 @@ https://help.github.com/articles/fork-a-repo
 Use the https://github.com/josven/phx project instead of the "Spoon-Knife".
 
 
+Set up database
+===============
+
+Windows 7
+---------
+
+* Download Installer from http://www.enterprisedb.com/products-services-training/pgdownload#windows
+* Install postgres from the installer
+* Open up pgAdminIII (should be in your start meny)
+* Create a new database for phx
+
+Normal way
+----------
+
+We use PostgreSQL in production, and I encourage to also use PostgreSQL
+in developent.
+
+For help setting up the database i refer to the PostgreSQL docuentation found
+here: http://www.postgresql.org/
+
+
 Create your working environment
 ===============================
 
 You have several options in setting up your working environment.  We recommend
 using virtualenv to seperate the dependencies of your project from your system's
 python environment.  If on Linux or Mac OS X, you can also use virtualenvwrapper to help manage multiple virtualenvs across different projects.
+
+Windows 7
+---------
+
+First you need pip intaller and virtualenv
+
+* Download install script for setup tools::
+
+    https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+    
+* Execute script in python, open cmd.exe: Start menu > run > cmd [enter]::
+
+    C:\python path_to_downloaded_script/ez_setup.py
+    
+* Install python package installer (pip)::
+
+    C:\easy_install pip
+    
+* Install virtualenv::
+
+    C:\pip install virtualenv
+
+* Create a virtual enviroment for phx::
+
+    C:\any_directory_that_you_want_to_store_your_virtual_enviroments\> virtualenv phx
+    
+* Activate the env::
+
+    C:\path_to_envs\> phx\Scripts\activate
+    
+    
+* (You can deactivate the enviroment by using the deactive command)::
+
+    (phx) C:\dectivate	
+
 
 Virtualenv Only
 ---------------
@@ -90,29 +147,22 @@ project path to the `site-directory` for you::
     $ mkvirtualenv -a phx phx-dev
     $ cd phx && add2virtualenv `pwd`
 
-Windows
--------
-
-In Windows, or if you're not comfortable using the command line, you will need
-to add a `.pth` file to the `site-packages` of your virtualenv. If you have
-been following the book's example for the virtualenv directory (pg. 12), then
-you will need to add a python pathfile named `_virtualenv_path_extensions.pth`
-to the `site-packages`. If you have been following the book, then your
-virtualenv folder will be something like::
-
-`~/.virtualenvs/phx/lib/python2.7/site-directory/`
-
-In the pathfile, you will want to include the following code (from
-virtualenvwrapper):
-
-    import sys; sys.__plen = len(sys.path)
-    /home/<youruser>/phx/phx/
-    import sys; new=sys.path[sys.__plen:]; del sys.path[sys.__plen:]; p=getattr(sys,'__egginsert',0); sys.path[p:p]=new; sys.__egginsert = p+len(new)
-
-
 Installation of dependencies
 =============================
 
+Windows 7
+---------
+
+* Open cmd.exe
+* Make sure you have the phx enviroment active
+* Navigate to your local repository of the phx code (Documents/GitHub/phx/)::
+
+    C:\Users\you\Documents\GitHub\phx> pip install -r requirements/local.txt
+    
+    
+Normal way
+----------
+   
 Depending on where you are installing dependencies:
 
 
@@ -129,16 +179,6 @@ Or just if you just using Virtualenv::
 Then install dependencies::
 
     $ pip install -r requirements/local.txt
-
-
-Set up database
-===============
-
-We use PostgreSQL in production, and I encourage to also use PostgreSQL
-in developent.
-
-For help setting up the database i refer to the PostgreSQL docuentation found
-here: http://www.postgresql.org/
 
 
 Set up project environment variables‎
