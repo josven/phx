@@ -27,6 +27,16 @@ Windows 7
 Set up github
 =============
 
+Windows 7, the easy way
+-----------------------
+
+- Download github app http://windows.github.com/
+- Install and set up/connect to your github account with the installer.
+
+
+Normal way
+----------
+
 To set up github follow the instructions on this page
 https://help.github.com/articles/set-up-git
 
@@ -34,6 +44,15 @@ If you already have an github account and git installed, you can skip this step.
 
 Get the code
 ============
+
+
+Windows 7, the easy way
+-----------------------
+- Go to http://github.com and login
+- Go to http://github.com/josven/phx/ and click the "Clone to desktop" button on your right side. This will automagic clone the phx repository on your local machine.
+
+Normal way
+----------
 
 Read this guide about how to fork a repository
 https://help.github.com/articles/fork-a-repo
