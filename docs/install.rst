@@ -4,12 +4,24 @@ Install PHX Django project
 
 To use this project follow these steps:
 
+#. Install Python 2.7
 #. Set up github
 #. Get the Code
 #. Create your working environment
 #. Install dependencies
 #. Set up project environment variables
 #. Run PHX
+
+Install Python 2.7
+==================
+
+Windows 7
+---------
+
+- Download and install python from http://python.org/download/
+
+- Adjust your PATH environment variable to include paths to Python executable and additional scripts. Add to PATH:
+    C:\Python27\;C:\Python27\Scripts;
 
 
 Set up github
