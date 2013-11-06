@@ -7,9 +7,6 @@ var testvar;
 
 $(function ()
 {
-
-
-
   textileSettings = {
       nameSpace:           "textile", // Useful to prevent multi-instances CSS conflict
       previewParserPath:   "~/sets/textile/preview.php",
@@ -37,18 +34,13 @@ $(function ()
           {name:'Kod', openWith:'@', closeWith:'@'}, 
           {separator:'---------------' },       
           {name:'Förhandsgranskning', beforeInsert:function(h) {
-            
-            alert("TODO!");
-            /*
-            $.ajax({
-              type: "POST",
-              url: url,
-              data: data,
-              success: success,
-              dataType: dataType
+            var preview_data = $(h.textarea).val();
+
+            $.post("/utils/preview/", { preview: preview_data })
+              .done(function(data) {
+                $(data).modal();
             });
-            $(h.textarea).
-            */
+
           }, className:'preview'},
           {name:'Storskärm', beforeInsert:function(h) {
             element = $(h.textarea).parent('.markItUpContainer');

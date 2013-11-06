@@ -10,10 +10,14 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import never_cache
+from django.views.generic import View
+from django.shortcuts import redirect
+
+from reversion.models import Version
+from braces.views import CsrfExemptMixin
+
 from core.utils import render
 from forms import update_entry_form, delete_entry_form, subscribe_tag_form
-from django.shortcuts import redirect
-from reversion.models import Version
 
 
 class ListOrderingMixin(object):
@@ -58,7 +62,16 @@ class ObjectSearchMixin(object):
             query_list.append(Q(**param))
 
         return queryset.filter(reduce(operator.or_, query_list))
-        
+
+
+class PreviewView(CsrfExemptMixin, View):
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            preview = request.POST.get('preview', None)
+            if preview is not None:
+                return render(request, 'preview.html', {'preview':preview})
+        return HttpResponse(status=404) 
+
 
 # old stuff
 

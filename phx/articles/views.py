@@ -20,12 +20,11 @@ from .forms import ArticleBodyForm
 from .forms import ArticleCommentForm
 
 
-
-
 # New stuff
 from django.db.models import Count
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from django.views.generic.edit import CreateView
 from braces.views import SetHeadlineMixin
 from braces.views import LoginRequiredMixin
 from braces.views import SelectRelatedMixin
@@ -36,7 +35,9 @@ from tags.models import UserTags
 from profiles.forms import SubscribeTagForm
 
 
-class ArticleListView(ObjectSearchMixin, ListOrderingMixin, TagSearchMixin, SelectRelatedMixin, LoginRequiredMixin, SetHeadlineMixin, ListView):
+class ArticleListView(ObjectSearchMixin, ListOrderingMixin, TagSearchMixin,
+                      SelectRelatedMixin, LoginRequiredMixin,
+                      SetHeadlineMixin, ListView):
     search_fields = ['title', 'body']
     search_model = Article
     login_url = "/"
@@ -60,7 +61,7 @@ class ArticleListView(ObjectSearchMixin, ListOrderingMixin, TagSearchMixin, Sele
             .annotate(articles_count=Count('user_tagged_articles')) \
             .order_by('-articles_count') \
             .exclude(main_article_category=True)[:5]
-        
+
         kwargs['top_subscribed_categories'] = UserTags.objects \
             .annotate(subscriptions_count=Count('user_subscriptions')) \
             .order_by('-subscriptions_count') \
@@ -76,8 +77,34 @@ class ArticleListView(ObjectSearchMixin, ListOrderingMixin, TagSearchMixin, Sele
         return super(ArticleListView, self).get_context_data(**kwargs)
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     model = Article
+
+
+class ArticleCommentCreateView(LoginRequiredMixin, CreateView):
+    model = ArticleComment
+    fields = ['comment']
+    form_class = ArticleCommentForm
+
+    def form_valid(self, form):
+        # Attach parent if present
+        parent_id = form.data.get('parent', None)
+        if parent_id:
+            form.instance.parent = ArticleComment.objects.get(id=parent_id)
+
+        # Ownership
+        form.instance.created_by = self.request.user
+        form.instance.author = self.request.user
+
+        # Attach the post
+        post_id = self.kwargs.get('post_pk', False)
+        if post_id:
+            post = Article.objects.get(id=post_id)
+        else:
+            post_slug = self.kwargs.get('post_slug', False)
+            post = Article.objects.get(slug=post_slug)
+        form.instance.post = post
+        return super(ArticleCommentCreateView, self).form_valid(form)
 
 
 # Old stuff

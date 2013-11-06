@@ -43,29 +43,56 @@
         -webkit-border-radius: 3px;
         }
 
+        #markItUpMarkItUp {
+          width: 100%;
+          margin: 0;
+          border: 0;
+        }
         .markItUp .markItUpButton18 a {
           background-image:url('/static/img/glyphicons-halflings.png');
           background-position: -456px -144px;
         }
 
+        .maximized li.markItUpButton {
+          margin-right: 5px;
+          margin-left: 5px;
+        }
+
         textarea#markItUp.markItUpEditor {
           background-image: none;
         }
-        .markItUpContainer.maximized .markItUpEditor {
-          width: 90%;
-          height: 90%;
-        }        
+
+        .markItUpContainer {
+          display: inline-block;
+          width: 100%;
+        }
+
         .markItUpContainer.maximized {
           position: fixed;
           top: 0;
           left: 0;
-          z-index: 9999;
+          z-index: 1040;
           width: 100%;
           height: 100%;
+          border: 0;
+          padding: 10px 0;
+
         }
+
         .markItUpContainer .markItUpEditor {
-          height: 100px;
+          width: 100%;
+          height: 150px;
+          border: 0;
+          padding: 0;
+        }        
+
+        .markItUpContainer.maximized .markItUpEditor {
+          width: 100%;
+          height: 70%;
+          border: 0;
+          padding: 0;
         }
+
     </style>
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">
 

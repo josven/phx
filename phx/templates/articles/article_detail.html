@@ -100,8 +100,11 @@
 
   <hr>
 
-  <textarea id="markItUp"></textarea>
-
+  <form action="{% url 'comment_article' post_pk=article.id %}" method="POST">
+    {% csrf_token %}
+    <textarea id="markItUp" name="comment"></textarea>
+    <button>Posta</button>
+  </form>
   {% with comments=article.comments.all %}
   {% recursetree comments %}
 

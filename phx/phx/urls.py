@@ -13,7 +13,7 @@ urlpatterns = patterns(
     (r'^', include('registration.urls')),
     (r'^', include('frontpage.urls')),
     (r'^', include('profiles.urls')),
-    #(r'^', include('core.urls')),
+    (r'^', include('core.urls')),
     #(r'^', include('settings.urls')),
     #(r'^', include('guestbook.urls')),
     #(r'^forum/', include('forum.urls')),

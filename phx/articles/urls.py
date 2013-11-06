@@ -3,6 +3,8 @@ from django.conf import urls
 
 from .views import ArticleListView
 from .views import ArticleDetailView
+from .views import ArticleCommentCreateView
+
 
 urlpatterns = patterns('',  
     
@@ -24,7 +26,18 @@ urlpatterns = patterns('',
         view=ArticleDetailView.as_view(),
         name='read_article'
     ),
-
+    # Comment an article based on id
+    url(
+        regex=r'artiklar/(?P<post_pk>\d*)/comment/$',
+        view=ArticleCommentCreateView.as_view(),
+        name='comment_article'
+    ),
+    # Comment an article based on slug
+    url(
+        regex=r'^artiklar/(?P<post_slug>[-\w]+)/comment/$',
+        view=ArticleCommentCreateView.as_view(),
+        name='comment_article'
+    ),
     # OLD STUFF
     #json for datatables
     url(r'^articles/list/json/$', 'articles.views.list_articles_json', name='list_articles_json'),
