@@ -1,4 +1,5 @@
-==================
+.. image:: https://landscape.io/github/josven/phx/master/landscape.png
+
 PHX Django project
 ==================
 
