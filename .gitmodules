@@ -1,6 +1,0 @@
-[submodule "phx/libs/jquery-oembed-all"]
-	path = phx/libs/jquery-oembed-all
-	url = git://github.com/starfishmod/jquery-oembed-all.git
-[submodule "phx/libs/markitup"]
-	path = phx/libs/markitup
-	url = git://github.com/markitup/1.x.git

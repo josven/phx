@@ -1,9 +1,19 @@
 """Development settings and globals."""
 
-
 from os.path import join, normpath
 
 from base import *
+
+
+########## LOCAL DATABASE CONFIGURATION, OVERIDES BASE
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join(DJANGO_ROOT, 'local_phx.db'),
+    }
+}
+########## END DATABASE CONFIGURATION
 
 
 ########## DEBUG CONFIGURATION

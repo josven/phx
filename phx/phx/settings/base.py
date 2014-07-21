@@ -15,7 +15,9 @@ def get_env_setting(setting):
     try:
         return environ[setting]
     except KeyError:
-        error_msg = "Set the %s env variable" % setting
+        doc_url = "https://github.com/josven/phx/blob/master/docs/install.rst#set-up-project-environment-variables"
+        error_msg = "Set the {0} env variable. See {1} for documentation".format(
+            setting, doc_url)
         raise ImproperlyConfigured(error_msg)
 
 
@@ -108,10 +110,10 @@ STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = (
-    normpath(join(SITE_ROOT, 'static')),
-    normpath(join(SITE_ROOT, 'libs')),
-)
+# STATICFILES_DIRS = (
+#     normpath(join(SITE_ROOT, 'static')),
+#     normpath(join(SITE_ROOT, 'libs')),
+# )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
@@ -187,42 +189,21 @@ DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'suit',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'django.contrib.markup',
 )
 
 THIRD_PARTY_APPS = (
-    'taggit',
-    'south',
-    'mptt',
-    'sorl.thumbnail',
-    'oembed',
-    'reversion',
-    'pagination',
     'debug_toolbar',
-    'compressor',
-    'django_forms_bootstrap',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'core',
     'accounts',
-    'articles',
-    #'chat',
-    #'forum',
-    'frontpage',
-    #'guestbook',
-    #'notifications',
-    'profiles',
-    'registration',
-    #'settings',
-    'tags',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -270,3 +251,35 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
+
+
+########## DJANGO SUIT CONFIG
+# Django Suit configuration example
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'PHX',
+    # 'HEADER_DATE_FORMAT': 'l, j. F Y',
+    # 'HEADER_TIME_FORMAT': 'H:i',
+
+    # forms
+    # 'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    # 'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    # 'MENU_ICONS': {
+    #    'sites': 'icon-leaf',
+    #    'auth': 'icon-lock',
+    # },
+    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    # 'MENU_EXCLUDE': ('auth.group',),
+    # 'MENU': (
+    #     'sites',
+    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
+    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
+    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
+    # ),
+
+    # misc
+    # 'LIST_PER_PAGE': 15
+}
