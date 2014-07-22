@@ -1,4 +1,4 @@
-.. image:: https://landscape.io/github/josven/phx/master/landscape.png
+.. image:: https://landscape.io/github/josven/phx/dev/landscape.png
 
 PHX Django project
 ==================
@@ -31,14 +31,14 @@ Install project
 
 To install the project follow the instructions_
 
-.. _instructions: https://github.com/josven/phx/blob/master/docs/install.rst
+.. _instructions: https://github.com/josven/phx/blob/dev/docs/install.rst
 
 Acknowledgements
 ================
 
 All of the contributors_ to this project.
 
-.. _contributors: https://github.com/josven/phx/blob/master/CONTRIBUTORS.txt
+.. _contributors: https://github.com/josven/phx/blob/dev/CONTRIBUTORS.txt
 
 
 License
@@ -46,4 +46,4 @@ License
 
 Official lincense_ of the project.
 
-.. _lincense: https://github.com/josven/phx/blob/master/LICENSE.txt
+.. _lincense: https://github.com/josven/phx/blob/dev/LICENSE.txt
