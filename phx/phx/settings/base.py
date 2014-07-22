@@ -10,14 +10,14 @@ from sys import path
 from django.core.exceptions import ImproperlyConfigured
 
 
-def get_env_setting(setting):
+def get_env_setting(setting, default=None):
     """ Get the environment setting or return exception """
     try:
         return environ[setting]
     except KeyError:
-        doc_url = "https://github.com/josven/phx/blob/master/docs/install.rst#set-up-project-environment-variables"
-        error_msg = "Set the {0} env variable. See {1} for documentation".format(
-            setting, doc_url)
+        if default is not None:
+            return default
+        error_msg = "Set the %s env variable" % setting
         raise ImproperlyConfigured(error_msg)
 
 
@@ -65,8 +65,8 @@ DATABASES = {
         'NAME': get_env_setting('PHX_DB_NAME'),
         'USER': get_env_setting('PHX_DB_USER'),
         'PASSWORD': get_env_setting('PHX_DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': get_env_setting('PHX_DB_HOST', 'localhost'),
+        'PORT': get_env_setting('PHX_DB_PORT', ''),
     }
 }
 ########## END DATABASE CONFIGURATION
