@@ -20,3 +20,6 @@ build
 # OSX folder files
 *.DS_Store
 *.localized
+
+assets/
+*_local.*
