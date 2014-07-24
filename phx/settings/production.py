@@ -53,5 +53,3 @@ ALLOWED_HOSTS = [
     '.phx-dev.herokuapp.com',
     'localhost'
 ]
-
-DEBUG_PROPAGATE_EXCEPTIONS = True
