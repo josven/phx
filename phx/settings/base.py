@@ -197,9 +197,9 @@ DJANGO_APPS = (
     'django.contrib.admindocs',
 )
 
-THIRD_PARTY_APPS = (
-    'debug_toolbar',
-)
+# THIRD_PARTY_APPS = (
+#     '',
+# )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
@@ -207,7 +207,8 @@ LOCAL_APPS = (
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+#INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 AUTH_USER_MODEL = 'auth.User'
 
