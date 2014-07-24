@@ -53,3 +53,8 @@ ALLOWED_HOSTS = [
     '.phx-dev.herokuapp.com',
     'localhost'
 ]
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
