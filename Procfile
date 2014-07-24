@@ -1,1 +1,1 @@
-web: gunicorn phx.phx.wsgi --log-file -
+web: gunicorn phx.wsgi --log-file -

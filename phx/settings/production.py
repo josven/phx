@@ -46,3 +46,12 @@ CACHES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = get_env_setting('PHX_SECRET_KEY')
 ########## END SECRET CONFIGURATION
+
+ALLOWED_HOSTS = [
+    '.phx.se',  # Allow domain and subdomains
+    '.phx.nu',
+    '.phx-dev.herokuapp.com',
+    'localhost'
+]
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
