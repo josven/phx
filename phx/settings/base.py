@@ -59,9 +59,10 @@ MANAGERS = ADMINS
 
 ########## DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': get_env_setting('PHX_DB_ENGINE', 'django.db.backends.postgresql_psycopg2'),
         'NAME': get_env_setting('PHX_DB_NAME'),
         'USER': get_env_setting('PHX_DB_USER'),
         'PASSWORD': get_env_setting('PHX_DB_PASSWORD'),
